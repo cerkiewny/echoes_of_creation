@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bkf5ley74suu6"]
+
+[ext_resource type="Script" path="res://static_dmg.gd" id="1_dg0qv"]
+[ext_resource type="Texture2D" uid="uid://bvuhxpcwffts8" path="res://assets/Free/Background/Brown.png" id="2_k70r4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t6wg3"]
+size = Vector2(64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7n6dq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_k70r4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Area2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_dg0qv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_t6wg3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7n6dq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
