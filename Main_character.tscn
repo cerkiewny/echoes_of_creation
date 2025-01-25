@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://bcccr3hso0ufr"]
+[gd_scene load_steps=30 format=3 uid="uid://bcccr3hso0ufr"]
 
 [ext_resource type="Texture2D" uid="uid://cfb4xis100r6u" path="res://assets/Free/Main Characters/Mask Dude/Idle (32x32).png" id="1_06g63"]
 [ext_resource type="Script" path="res://main_character.gd" id="1_wjxyg"]
+[ext_resource type="Texture2D" uid="uid://dfk4snl2p44qt" path="res://assets/Free/Main Characters/Mask Dude/Jump (32x32).png" id="3_62li5"]
 [ext_resource type="Texture2D" uid="uid://byv08tlblu34w" path="res://assets/Free/Main Characters/Mask Dude/Run (32x32).png" id="3_pkgy4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qp8tj"]
@@ -134,7 +135,15 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 11.0
+"speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_62li5")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 2.0,
@@ -175,7 +184,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"running",
-"speed": 11.0
+"speed": 13.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tghfw"]
@@ -193,8 +202,8 @@ offset_bottom = 40.0
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_e4g77")
-animation = &"running"
-frame_progress = 0.461371
+animation = &"jump"
+autoplay = "idle"
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(-0.5, 2.5)
@@ -208,5 +217,10 @@ shape = SubResource("CapsuleShape2D_tghfw")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, -0.5)
 shape = SubResource("CapsuleShape2D_tghfw")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(35.5, -23.5)
+scale = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
