@@ -1,13 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://dp1p6o133jjn3"]
+[gd_scene load_steps=9 format=3 uid="uid://dp1p6o133jjn3"]
 
 [ext_resource type="Script" path="res://ui.gd" id="1_o24tb"]
+[ext_resource type="Texture2D" uid="uid://bvxgdibkmprph" path="res://assets/player/heart.png" id="2_50lb7"]
 [ext_resource type="PackedScene" uid="uid://beytqucaa6ttc" path="res://scenes/rock.tscn" id="3_7j1av"]
 [ext_resource type="FontFile" uid="uid://b2powaar2e36r" path="res://assets/Fonts/Estonia-Regular.ttf" id="3_njch4"]
 [ext_resource type="PackedScene" uid="uid://bcccr3hso0ufr" path="res://Main_character.tscn" id="4_n51q8"]
 [ext_resource type="Script" path="res://hp_bar.gd" id="6_gdfli"]
+[ext_resource type="Script" path="res://level_border.gd" id="7_jg40d"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1qtlu"]
-load_path = "res://.godot/imported/painting-bucket-logo-icon.svg-9656e0e41fd5eeb24be712655bdbccfe.ctex"
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_oftyg"]
 
 [node name="Game" type="Node"]
 
@@ -19,26 +20,17 @@ script = ExtResource("1_o24tb")
 
 [node name="HUD" type="Node" parent="UI/CanvasLayer"]
 
-[node name="TextureRect2" type="TextureRect" parent="UI/CanvasLayer/HUD"]
+[node name="Heart" type="TextureRect" parent="UI/CanvasLayer/HUD"]
+visible = false
 custom_minimum_size = Vector2(25, 0)
-offset_right = 25.0
-
-[node name="hp_heart" type="Sprite2D" parent="UI/CanvasLayer/HUD/TextureRect2"]
-position = Vector2(10.75, 13.8853)
-scale = Vector2(0.217647, 0.217647)
-texture = SubResource("CompressedTexture2D_1qtlu")
+offset_right = 77.0
+offset_bottom = 92.0
+texture = ExtResource("2_50lb7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/CanvasLayer/HUD"]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("6_gdfli")
-
-[node name="TextureRect" type="TextureRect" parent="UI/CanvasLayer/HUD"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="StartMenu" type="Node" parent="UI/CanvasLayer"]
 
@@ -85,9 +77,17 @@ position = Vector2(-75, 200)
 [node name="Rock4" parent="." instance=ExtResource("3_7j1av")]
 position = Vector2(377, 135)
 
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(159, 200)
+script = ExtResource("7_jg40d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("WorldBoundaryShape2D_oftyg")
+
 [node name="Rock2" parent="." instance=ExtResource("3_7j1av")]
 position = Vector2(159, 200)
 
 [connection signal="change_ui" from="UI" to="UI" method="_on_change_ui"]
 [connection signal="pressed" from="UI/CanvasLayer/StartMenu/VBoxContainer/StartGame" to="UI" method="_on_start_game_pressed"]
 [connection signal="take_dmg" from="World/Player" to="UI/CanvasLayer/HUD/HBoxContainer" method="_on_player_take_dmg"]
+[connection signal="body_shape_entered" from="Area2D" to="Area2D" method="_on_body_shape_entered"]
