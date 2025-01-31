@@ -1,9 +1,9 @@
 extends HBoxContainer
 
-@onready var player = $"../../Player"
+@onready var player = $"../../../../World/Player"
 @onready var container = $"."
 @onready var max_hp = player.max_life
-@onready var heart = $"../TextureRect"
+@onready var heart = $"../TextureRect2"
 var heart_list : Array[TextureRect]
 
 
