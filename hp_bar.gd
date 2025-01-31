@@ -24,7 +24,6 @@ func _process(delta):
 
 
 func _on_player_take_dmg():
-    print("redraw")
     for i in range(player.life):
         heart_list[i].set_texture(full_heart_texture)
     for i in range (player.life, player.max_life):

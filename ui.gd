@@ -19,11 +19,14 @@ var state = UI_STATE.GAME_START
 
 @onready var HUD =  $CanvasLayer/HUD
 @onready var StartMenu = $CanvasLayer/StartMenu
+@onready var World = $"../World"
 
 signal change_ui(transition)
 
 func _ready():
 	get_tree().paused = true
+	World.visible = false
+	HUD.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -38,9 +41,14 @@ func _on_start_game_pressed():
 func on_state_enter():
 	match state:
 		UI_STATE.GAME:
+			World.visible = true
+			HUD.visible = true
 			get_tree().paused = false
 		UI_STATE.GAME_START,UI_STATE.PAUSE, UI_STATE.MENU:
 			get_tree().paused = true
+			World.visible = false
+			HUD.visible = false
+			
 
 func _on_change_ui(transition):
 	match transition:

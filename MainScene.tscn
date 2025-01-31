@@ -18,7 +18,7 @@ script = ExtResource("1_o24tb")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="UI"]
 
-[node name="HUD" type="Node" parent="UI/CanvasLayer"]
+[node name="HUD" type="Node2D" parent="UI/CanvasLayer"]
 
 [node name="Heart" type="TextureRect" parent="UI/CanvasLayer/HUD"]
 visible = false
@@ -26,24 +26,25 @@ custom_minimum_size = Vector2(25, 0)
 offset_right = 77.0
 offset_bottom = 92.0
 texture = ExtResource("2_50lb7")
+expand_mode = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/CanvasLayer/HUD"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 25.0
+offset_bottom = 25.0
 script = ExtResource("6_gdfli")
 
 [node name="StartMenu" type="Node" parent="UI/CanvasLayer"]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/CanvasLayer/StartMenu"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 53.0
+offset_bottom = 29.0
 
 [node name="StartGame" type="Button" parent="UI/CanvasLayer/StartMenu/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_njch4")
 text = "Start Game"
 
-[node name="World" type="Node" parent="."]
+[node name="World" type="Node2D" parent="."]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="World"]
 
@@ -68,26 +69,26 @@ position_smoothing_enabled = true
 position = Vector2(2, 5)
 color = Color(0.173041, 0.160586, 0.569458, 1)
 
-[node name="Rock3" parent="." instance=ExtResource("3_7j1av")]
+[node name="Rock3" parent="World" instance=ExtResource("3_7j1av")]
 position = Vector2(619, 61)
 
-[node name="Rock" parent="." instance=ExtResource("3_7j1av")]
+[node name="Rock" parent="World" instance=ExtResource("3_7j1av")]
 position = Vector2(-75, 200)
 
-[node name="Rock4" parent="." instance=ExtResource("3_7j1av")]
+[node name="Rock4" parent="World" instance=ExtResource("3_7j1av")]
 position = Vector2(377, 135)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="World"]
 position = Vector2(159, 200)
 script = ExtResource("7_jg40d")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Area2D"]
 shape = SubResource("WorldBoundaryShape2D_oftyg")
 
-[node name="Rock2" parent="." instance=ExtResource("3_7j1av")]
+[node name="Rock2" parent="World" instance=ExtResource("3_7j1av")]
 position = Vector2(159, 200)
 
 [connection signal="change_ui" from="UI" to="UI" method="_on_change_ui"]
 [connection signal="pressed" from="UI/CanvasLayer/StartMenu/VBoxContainer/StartGame" to="UI" method="_on_start_game_pressed"]
 [connection signal="take_dmg" from="World/Player" to="UI/CanvasLayer/HUD/HBoxContainer" method="_on_player_take_dmg"]
-[connection signal="body_shape_entered" from="Area2D" to="Area2D" method="_on_body_shape_entered"]
+[connection signal="body_shape_entered" from="World/Area2D" to="World/Area2D" method="_on_body_shape_entered"]
